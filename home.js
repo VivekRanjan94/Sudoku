@@ -9,6 +9,7 @@ var mistakes = 0
 
 const elements = document.querySelectorAll('.element')
 const buttons = document.querySelectorAll('[data-number]')
+const deleteButton = document.querySelector('[data-delete]')
 
 
 function createBoard() {
@@ -105,9 +106,14 @@ elements.forEach(element => {
                     } else {
                         selectedElement.classList.add('incorrect')
                     }
-                    
                 }
             })
+        })
+
+        deleteButton.addEventListener('click', () => {
+            if(!selectedElement.classList.contains('set-board')) {
+                selectedElement.value = ''
+            }
         })
     })
 })
