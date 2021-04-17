@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sudoku</title>
   <link rel="stylesheet" href="style.css">
-  <script src="boards.json"></script>
   <script src="home.js" defer></script>
 </head>
 <body>
@@ -32,6 +31,13 @@
       <button data-number class="btn">9</button>
       <button data-delete class="btn">C</button>
     </div>
+    <select name="level" id="level">
+      <option value="1" selected>Easy</option>
+      <option value="2">Medium</option>
+      <option value="3">Hard</option>
+      <option value="4">Expert</option>
+      <option value="5">Random</option>
+    </select>
     <button class="btn refresh">Refresh</button>
   </div>
 </body>
