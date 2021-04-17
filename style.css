@@ -5,14 +5,11 @@
 }
 
 * {
-  /* font-weight: 700; */
   font-family: Source Sans Pro, sans-serif;
   font-size: 1.2rem;
 }
 
-/* body {
-  background: linear-gradient(to right, rgb(69, 163, 240), rgb(26, 160, 238));
-} */
+
 
 .header{
   display:flex;
@@ -152,9 +149,7 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-.user-input {
-  color: #1446b3;
-}
+
 
 .element:focus {
   background-color: #386fe6a6;
@@ -162,4 +157,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .incorrect {
   color:#e60f0fa1;
+}
+
+.user-input, corrected{
+  color: #1446b3;
 }

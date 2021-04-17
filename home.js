@@ -55,18 +55,21 @@ function createBoard() {
 
 function setBoard() {
     let boardArr = boardstr.split(' ')
+    document.querySelector('.mistakes').innerText = '0'
 
     let i = 0
     let elements = document.querySelectorAll('.element')
     elements.forEach(element => {
+        element.classList.remove('user-input')
+        element.classList.remove('incorrect')
+        element.classList.remove('corrected')
         if(boardArr[i] != 0) {
             element.value = boardArr[i]
             element.classList.add('set-board')
+            
         } else {
             element.value = ''
             element.classList.remove('set-board')
-            element.classList.remove('user-input')
-            element.classList.remove('incorrect')
         }
         i++
     })
@@ -92,16 +95,33 @@ function idToCoordinate(idstr) {
 
 var selectedElement
 
-elements.forEach(element => {
-    element.addEventListener('click', () => {
-        selectedElement = document.activeElement
+document.addEventListener('click', () => {
+    mistakes = document.querySelectorAll('.incorrect').length + document.querySelectorAll('.corrected').length
+    document.querySelector('.mistakes').innerText = mistakes
+    if(mistakes >=3) {
+        setBoard()
+        setSol()
+        alert("You have made too many mistakes")
+    }
+})
 
+elements.forEach(element => {
+    
+    element.addEventListener('click', () => {
+        // console.log(document.querySelectorAll('.incorrect'))
+        // console.log(document.querySelectorAll('.corrected'))
+        
+        selectedElement = document.activeElement
+        
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 if(!selectedElement.classList.contains('set-board')) {
                     selectedElement.value = button.innerText
                     if(parseInt(sol[idToCoordinate(selectedElement.id.toString())[0]][idToCoordinate(selectedElement.id.toString())[1]]) == parseInt(button.innerText)) {
                         selectedElement.classList.add('user-input')
+                        if(selectedElement.classList.contains('incorrect')) {
+                            selectedElement.classList.add('corrected')
+                        }
                         selectedElement.classList.remove('incorrect')
                     } else {
                         selectedElement.classList.add('incorrect')
