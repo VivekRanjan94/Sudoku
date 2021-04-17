@@ -148,6 +148,9 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 2px;
   padding: 5px;
   margin:2px;
+}
+
+.input-cont > .btn {
   width: 30px;
 }
 
@@ -168,4 +171,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .user-input, corrected{
   color: #1446b3;
+}
+
+.final {
+  color: #1c7401bd;
 }

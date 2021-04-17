@@ -476,8 +476,8 @@ var boards = [ ["6...7..8...7..3.9...1...4........1.4..3.16.27.74..........8...6
 
 const board = document.querySelector('#board')
 let boardIndex = Math.floor(Math.random()*54)
-const boardstr = boards[boardIndex][0]
-const solstr = boards[boardIndex][1]
+var boardstr = boards[boardIndex][0]
+var solstr = boards[boardIndex][1]
 
 console.log(boardstr)
 console.log(solstr)
@@ -545,6 +545,7 @@ function setBoard() {
         element.classList.remove('user-input')
         element.classList.remove('incorrect')
         element.classList.remove('corrected')
+        element.classList.remove('final')
         if(boardArr[i] != '.') {
             element.value = boardArr[i]
             element.classList.add('set-board')
@@ -567,8 +568,21 @@ function setSol() {
             sol[j].push(parseInt(solArr[count]))
             count++
         }
-        
     }
+}
+
+function fillBoard() {
+    let elements = document.querySelectorAll('.element')
+    let i = 0
+    elements.forEach(element => {
+        element.value = sol[idToCoordinate(element.id.toString())[0]][idToCoordinate(element.id.toString())[1]]
+        element.classList.remove('user-input')
+        element.classList.remove('corrected')
+        element.classList.remove('incorrect')
+        element.classList.remove('set-board')
+        element.classList.add('final')
+        i++
+    })
 }
 
 function idToCoordinate(idstr) {
@@ -581,8 +595,7 @@ document.addEventListener('click', () => {
     mistakes = document.querySelectorAll('.incorrect').length + document.querySelectorAll('.corrected').length
     document.querySelector('.mistakes').innerText = mistakes
     if(mistakes >=3) {
-        setBoard()
-        setSol()
+        fillBoard()
         alert("You have made too many mistakes")
     }
 })
@@ -617,4 +630,18 @@ elements.forEach(element => {
             }
         })
     })
+})
+
+const refresh = document.querySelector('.refresh')
+refresh.addEventListener('click', () => {
+    boardIndex = Math.floor(Math.random()*54)
+    boardstr = boards[boardIndex][0]
+    solstr = boards[boardIndex][1]
+
+    console.log(boardstr)
+    console.log(solstr)
+
+    setBoard()
+    setSol()
+    mistakes = 0
 })
