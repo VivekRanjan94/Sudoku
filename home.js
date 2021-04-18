@@ -2383,7 +2383,6 @@ var boards = {
       ["....73...85.6...7...35.2.....78.5....1.............2.9...7.63.15..9.....3...58...","196473528852619473743582196237895614619324785485167239928746351574931862361258947"]
     ]
   }
-let a = 0
 const board = document.querySelector('#board')
 createBoard()
 const elements = document.querySelectorAll('.element')
@@ -2404,7 +2403,7 @@ init()
 function init() {
     let selectedLevel = level.value
     mistakes = 0
-    boardIndex = Math.floor(Math.random()*54)
+    boardIndex = Math.floor(Math.random()*475)
     switch(parseInt(selectedLevel)) {
         case 1:
             boardstr = boards.easy[boardIndex][0]
@@ -2487,7 +2486,6 @@ function setBoard() {
         if(boardArr[i] != '.') {
             element.value = boardArr[i]
             element.classList.add('set-board')
-            
         } else {
             element.value = ''
             element.classList.remove('set-board')
@@ -2509,7 +2507,6 @@ function setSol() {
             count++
         }
     }
-    a++
 }
 
 function fillBoard() {
@@ -2535,14 +2532,32 @@ document.addEventListener('click', () => {
 })
 
 var selectedElement
+var previousElement
+let a = 0
 
 elements.forEach(element => {
     
     element.addEventListener('click', () => {
+        previousElement = selectedElement
         selectedElement = document.activeElement
+
+        elements.forEach(square => {
+            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5)) {
+                square.classList.add('selected')
+            }
+            if(a!=0 && (square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) {
+                square.classList.remove('selected')
+            }
+        })
+        a++
         
         buttons.forEach(button => {
             button.addEventListener('click', () => {
+                elements.forEach(square => {
+                    if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5)) {
+                        square.classList.remove('selected')
+                    }
+                })
                 if(!selectedElement.classList.contains('set-board')) {
                     selectedElement.value = button.innerText
                     if(parseInt(sol[selectedElement.id.charAt(3)][selectedElement.id.charAt(5)]) == parseInt(button.innerText)) {
