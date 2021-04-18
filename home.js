@@ -2546,7 +2546,7 @@ elements.forEach(element => {
             if(a!=0 && (((square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) || (square.dataset.num == previousElement.dataset.num && square.dataset.num!=selectedElement.dataset.num))) {
                 square.classList.remove('selected')
             }
-            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.innerText!='')) {
+            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.value!='')) {
                 square.classList.add('selected')
             }
         })
