@@ -2467,7 +2467,7 @@ function createBoard() {
         if(i == 8 && j == 8) {
             inputClass += " bot-right-corner"
         }
-        text += '<input type="number" value="" id="num' + i + "-" + j+ '"class="element ' + inputClass + '"' + ' readonly>'
+        text += '<input data-num="" type="number" value="" id="num' + i + "-" + j+ '"class="element ' + inputClass + '"' + ' readonly>'
     }
     text += "</div>"
     board.innerHTML += text
@@ -2486,6 +2486,7 @@ function setBoard() {
         if(boardArr[i] != '.') {
             element.value = boardArr[i]
             element.classList.add('set-board')
+            element.dataset.num = boardArr[i].toString()
         } else {
             element.value = ''
             element.classList.remove('set-board')
@@ -2542,11 +2543,11 @@ elements.forEach(element => {
         selectedElement = document.activeElement
 
         elements.forEach(square => {
-            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5)) {
-                square.classList.add('selected')
-            }
-            if(a!=0 && (square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) {
+            if(a!=0 && (((square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) || (square.dataset.num == previousElement.dataset.num && square.dataset.num!=selectedElement.dataset.num))) {
                 square.classList.remove('selected')
+            }
+            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.innerText!='')) {
+                square.classList.add('selected')
             }
         })
         a++
@@ -2562,6 +2563,7 @@ elements.forEach(element => {
                     selectedElement.value = button.innerText
                     if(parseInt(sol[selectedElement.id.charAt(3)][selectedElement.id.charAt(5)]) == parseInt(button.innerText)) {
                         selectedElement.style.color = "#1446b3"
+                        selectedElement.dataset.num = button.innerText
                     } else {
                         selectedElement.classList.add('wrong')
                         selectedElement.style.color = "#e60f0fa1"
