@@ -2557,7 +2557,7 @@ elements.forEach(element => {
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 elements.forEach(square => {
-                    if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5)) {
+                    if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
                         square.classList.remove('selected')
                     }
                 })
