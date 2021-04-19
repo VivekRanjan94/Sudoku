@@ -2481,7 +2481,9 @@ function setBoard() {
     let i = 0
     let elements = document.querySelectorAll('.element')
     elements.forEach(element => {
+        element.dataset.num = ''
         element.classList.remove('wrong')
+        element.classList.remove('selected')
         element.style.color = "black"
         if(boardArr[i] != '.') {
             element.value = boardArr[i]
