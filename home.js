@@ -2401,6 +2401,9 @@ var mistakes = 0
 init()
 
 function init() {
+    buttons.forEach(button => {
+        button.classList.remove('finished')
+    })
     let selectedLevel = level.value
     mistakes = 0
     boardIndex = Math.floor(Math.random()*475)
@@ -2569,6 +2572,16 @@ elements.forEach(element => {
                     } else {
                         selectedElement.classList.add('wrong')
                         selectedElement.style.color = "#e60f0fa1"
+                    }
+                }
+                for(let number = 1; number <=9; number++) {
+                    let str = '[data-num="' + number + '"]'
+                    if(document.querySelectorAll(str).length == 9) {
+                        buttons.forEach(btn => {
+                            if(btn.classList.contains(number.toString())) {
+                                btn.classList.add('finished')
+                            }
+                        })
                     }
                 }
             })
