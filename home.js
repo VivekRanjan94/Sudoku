@@ -2384,10 +2384,11 @@ var boards = {
     ]
 }
 
+let timer = window.setInterval(stopWatch, 1000)
 var seconds = 0
 var minutes = 0
 var hours = 0
-
+var paused = false
 
 const board = document.querySelector('#board')
 createBoard()
@@ -2397,6 +2398,7 @@ const deleteButton = document.querySelector('[data-delete]')
 const refresh = document.querySelector('.refresh')
 const level = document.querySelector('#level')
 const mistakesDisplay = document.querySelector('.mistakes')
+const pausebtn = document.querySelector('.pause')
 
 let boardIndex = 0
 var boardstr = ''
@@ -2673,5 +2675,17 @@ function checkComplete() {
     }
 }
 
-window.setInterval(stopWatch, 1000)
 window.setInterval(checkComplete, 1000)
+
+pausebtn.addEventListener('click', () => {
+    paused = !paused
+    elements.forEach(element => {
+        element.classList.toggle('blur')
+    })
+
+    if(!paused) {
+        let timer = window.setInterval(stopWatch, 1000)
+    } else {
+        window.clearInterval(timer)
+    }
+})

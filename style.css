@@ -204,3 +204,7 @@ input[type=number] {
 .detail-cont > div {
   margin:10px
 }
+
+.blur {
+  display:none;
+}
