@@ -2415,31 +2415,34 @@ function init() {
     buttons.forEach(button => {
         button.classList.remove('finished')
     })
-    let selectedLevel = level.value
+    // let selectedLevel = level.value
     mistakes = 0
     boardIndex = Math.floor(Math.random()*475)
-    switch(parseInt(selectedLevel)) {
-        case 1:
-            boardstr = boards.easy[boardIndex][0]
-            solstr = boards.easy[boardIndex][1]
-            break
-        case 2:
-            boardstr = boards.medium[boardIndex][0]
-            solstr = boards.medium[boardIndex][1]
-            break
-        case 3:
-            boardstr = boards.hard[boardIndex][0]
-            solstr = boards.hard[boardIndex][1]
-            break
-        case 4:
-            boardstr = boards.expert[boardIndex][0]
-            solstr = boards.expert[boardIndex][1]
-            break
-        default:
-            boardstr = boards.random[boardIndex][0]
-            console.log("Default")
-            break
-    }
+
+    boardstr = boards.easy[boardIndex][0]
+    solstr = boards.easy[boardIndex][1]
+    // switch(parseInt(selectedLevel)) {
+    //     case 1:
+    //         boardstr = boards.easy[boardIndex][0]
+    //         solstr = boards.easy[boardIndex][1]
+    //         break
+    //     case 2:
+    //         boardstr = boards.medium[boardIndex][0]
+    //         solstr = boards.medium[boardIndex][1]
+    //         break
+    //     case 3:
+    //         boardstr = boards.hard[boardIndex][0]
+    //         solstr = boards.hard[boardIndex][1]
+    //         break
+    //     case 4:
+    //         boardstr = boards.expert[boardIndex][0]
+    //         solstr = boards.expert[boardIndex][1]
+    //         break
+    //     default:
+    //         boardstr = boards.random[boardIndex][0]
+    //         console.log("Default")
+    //         break
+    // }
     console.log(boardstr)
     console.log(solstr)
     setBoard()
@@ -2638,9 +2641,9 @@ refresh.addEventListener('click', () => {
     init()
 })
 
-level.addEventListener('change', () => {
-    init()
-})
+// level.addEventListener('change', () => {
+//     init()
+// })
 
 function stopWatch() {
     
