@@ -2592,6 +2592,34 @@ elements.forEach(element => {
                 selectedElement.value = ''
             }
         })
+
+        document.addEventListener('keydown', function(event) {
+            elements.forEach(square => {
+                if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
+                    square.classList.remove('selected')
+                }
+            })
+            if(!selectedElement.classList.contains('set-board')) {
+                selectedElement.value = event.key
+                if(parseInt(sol[selectedElement.id.charAt(3)][selectedElement.id.charAt(5)]) == parseInt(event.key)) {
+                    selectedElement.style.color = "#1446b3"
+                    selectedElement.dataset.num = event.key
+                } else {
+                    selectedElement.classList.add('wrong')
+                    selectedElement.style.color = "#e60f0fa1"
+                }
+            }
+            for(let number = 1; number <=9; number++) {
+                let str = '[data-num="' + number + '"]'
+                if(document.querySelectorAll(str).length == 9) {
+                    buttons.forEach(btn => {
+                        if(btn.classList.contains(number.toString())) {
+                            btn.classList.add('finished')
+                        }
+                    })
+                }
+            }            
+        })
     })
 })
 
