@@ -194,3 +194,13 @@ input[type=number] {
 .finished {
   background-color: rgba(104, 250, 104, 0.705);
 }
+
+.detail-cont {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-cont > div {
+  margin:10px
+}
