@@ -2543,16 +2543,6 @@ function fillBoard() {
     })
 }
 
-document.addEventListener('click', () => {
-    mistakes = document.querySelectorAll('.wrong').length 
-    
-    mistakesDisplay.innerText = mistakes
-    if(mistakes >= 3) {
-        fillBoard()
-        alert("You have made too many mistakes!!")
-    }
-})
-
 var selectedElement
 var previousElement
 let a = 0
@@ -2648,7 +2638,14 @@ refresh.addEventListener('click', () => {
 // })
 
 function stopWatch() {
+    mistakes = document.querySelectorAll('.wrong').length 
     
+    mistakesDisplay.innerText = mistakes
+    if(mistakes >= 3) {
+        fillBoard()
+        alert("You have made too many mistakes!!")
+    }
+
     seconds++
     if(seconds/60==1) {
         seconds = 0
@@ -2666,6 +2663,7 @@ function stopWatch() {
 }
 
 function checkComplete() {
+
     buttons.forEach(button => {
         if(button.classList.contains('finished')) {
             button.style.color = 'transparent'
@@ -2692,6 +2690,11 @@ window.setInterval(checkComplete, 1000)
 
 pausebtn.addEventListener('click', () => {
     paused = !paused
+    if(paused) {
+        pausebtn.innerText = 'Play'
+    } else {
+        pausebtn.innerText = 'Pause'
+    }
     elements.forEach(element => {
         element.classList.toggle('blur')
     })

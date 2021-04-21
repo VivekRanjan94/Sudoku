@@ -156,11 +156,6 @@ input[type=number] {
   color:rgba(255, 0, 0, 0.7);
 }
 
-
-.input-cont > .btn {
-  width: 30px;
-}
-
 .btn:hover{
   background-color:var(--accent-color);
   cursor: pointer;
@@ -208,5 +203,6 @@ input[type=number] {
 }
 
 [data-number] {
-  margin:0 15px;
+  margin:0 10px;
+  padding:10px
 }
