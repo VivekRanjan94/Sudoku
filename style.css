@@ -47,11 +47,6 @@
   background-color: #386fe6a6;
 }
 
-@media only screen and (max-width: 700px) {
-  .container {
-    width:1fr;
-  }
-}
 .element:hover {
   background-color: var(--accent-color);
   cursor:pointer;
@@ -205,4 +200,40 @@ input[type=number] {
 [data-number] {
   margin:0 10px;
   padding:10px
+}
+
+@media only screen and (max-width: 700px) {
+  .container {
+    width:1fr;
+  }
+  
+  .top-left {
+    border-top: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+  }
+  .top-mid {
+    border-top: 2px solid var(--border-color);
+  }
+  .top-right {
+    border-top: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
+  }
+  .mid-left {
+    border-left: 2px solid var(--border-color);
+  }
+  .mid-right {
+    border-right: 2px solid var(--border-color);
+  }
+  
+  .bot-left {
+    border-left: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+  }
+  .bot-mid {
+    border-bottom: 2px solid var(--border-color);
+  }
+  .bot-right {
+    border-right: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+  }
 }
