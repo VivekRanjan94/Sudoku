@@ -206,34 +206,4 @@ input[type=number] {
   .container {
     width:1fr;
   }
-  
-  .top-left {
-    border-top: 3px solid var(--border-color);
-    border-left: 3px solid var(--border-color);
-  }
-  .top-mid {
-    border-top: 3px solid var(--border-color);
-  }
-  .top-right {
-    border-top: 3px solid var(--border-color);
-    border-right: 3px solid var(--border-color);
-  }
-  .mid-left {
-    border-left: 3px solid var(--border-color);
-  }
-  .mid-right {
-    border-right: 3px solid var(--border-color);
-  }
-  
-  .bot-left {
-    border-left: 3px solid var(--border-color);
-    border-bottom: 3px solid var(--border-color);
-  }
-  .bot-mid {
-    border-bottom: 3px solid var(--border-color);
-  }
-  .bot-right {
-    border-right: 3px solid var(--border-color);
-    border-bottom: 3px solid var(--border-color);
-  }
 }
