@@ -2695,9 +2695,8 @@ pausebtn.addEventListener('click', () => {
     } else {
         pausebtn.innerText = 'Pause'
     }
-    elements.forEach(element => {
-        element.classList.toggle('blur')
-    })
+    board.classList.toggle('blur')
+    document.querySelector('.input-cont').classList.toggle('blur')
 
     if(!paused) {
         timer = window.setInterval(stopWatch, 1000)
