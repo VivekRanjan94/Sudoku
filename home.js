@@ -2485,7 +2485,8 @@ function createBoard() {
         if(i == 8 && j == 8) {
             inputClass += " bot-right-corner"
         }
-        text += '<input data-num="" type="number" value="" id="num' + i + "-" + j+ '"class="element ' + inputClass + '"' + ' readonly>'
+        let square = parseInt(i / 3) * 3 + parseInt(j / 3)
+        text += '<input data-square="' + square + '" data-num="" type="number" value="" id="num' + i + "-" + j+ '"class="element ' + inputClass + '"' + ' readonly>'
     }
     text += "</div>"
     board.innerHTML += text
@@ -2563,10 +2564,10 @@ elements.forEach(element => {
         selectedElement = document.activeElement
 
         elements.forEach(square => {
-            if(a!=0 && (((square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) || (square.dataset.num == previousElement.dataset.num && square.dataset.num!=selectedElement.dataset.num))) {
+            if(a!=0 && (((square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) || (square.dataset.num == previousElement.dataset.num && square.dataset.num!=selectedElement.dataset.num) || (square.dataset.square == previousElement.dataset.square))) {
                 square.classList.remove('selected')
             }
-            if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.value!='')) {
+            if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.value!='')) {
                 square.classList.add('selected')
             }
         })
@@ -2575,7 +2576,7 @@ elements.forEach(element => {
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 elements.forEach(square => {
-                    if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
+                    if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
                         square.classList.remove('selected')
                     }
                 })
@@ -2610,7 +2611,7 @@ elements.forEach(element => {
 
         document.addEventListener('keydown', function(event) {
             elements.forEach(square => {
-                if(square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
+                if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
                     square.classList.remove('selected')
                 }
             })
