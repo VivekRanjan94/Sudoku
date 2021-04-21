@@ -150,7 +150,8 @@ input[type=number] {
 }
 
 .btn {
-  border: 1px solid var(--border-color);
+  border: none;
+  /* border: 1px solid var(--border-color); */
   background-color: var(--secondary-color);
   border-radius: 2px;
   padding: 5px;
@@ -191,8 +192,9 @@ input[type=number] {
   background-color: rgba(0,0,0,0.1);
 }
 
-.finished {
-  background-color: rgba(104, 250, 104, 0.705);
+.finished:hover {
+  background-color: white;
+  cursor: auto;
 }
 
 .detail-cont {

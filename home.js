@@ -2419,8 +2419,8 @@ function init() {
     mistakes = 0
     boardIndex = Math.floor(Math.random()*475)
 
-    boardstr = boards.easy[boardIndex][0]
-    solstr = boards.easy[boardIndex][1]
+    boardstr = boards.medium[boardIndex][0]
+    solstr = boards.medium[boardIndex][1]
     // switch(parseInt(selectedLevel)) {
     //     case 1:
     //         boardstr = boards.easy[boardIndex][0]
@@ -2663,6 +2663,11 @@ function stopWatch() {
 }
 
 function checkComplete() {
+    buttons.forEach(button => {
+        if(button.classList.contains('finished')) {
+            button.innerText = ''
+        }
+    })
     let filled = 0
     elements.forEach(element => {
         if(element.dataset.num!="") {
@@ -2673,7 +2678,8 @@ function checkComplete() {
 
     if(filled == 81) {
         let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + seconds
-        alert("Congratulations! You have completed the puzzle in " + time)
+        let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
+        alert("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
         init()
     }
 }
