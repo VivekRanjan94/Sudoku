@@ -193,10 +193,6 @@ input[type=number] {
   margin:10px
 }
 
-.blur {
-  display:none;
-}
-
 [data-number] {
   margin:0 10px;
   padding:10px

@@ -2384,12 +2384,13 @@ var boards = {
     ]
 }
 
-let timer = window.setInterval(stopWatch, 1000)
+let timer
 var seconds = 0
 var minutes = 0
 var hours = 0
-var paused = false
+var paused = true
 
+const boardCont = document.querySelector('.board-cont')
 const board = document.querySelector('#board')
 createBoard()
 const elements = document.querySelectorAll('.element')
@@ -2406,9 +2407,13 @@ var solstr = ''
 var sol = []
 var mistakes = 0
 
-init()
+newGame()
 
-function init() {
+function newGame() {
+    paused = true
+    pausebtn.innerText = 'Play'
+    window.clearInterval(timer)
+    boardCont.style.display = 'none'
     seconds = 0
     minutes = 0
     hours = 0
@@ -2450,7 +2455,7 @@ function init() {
     setSol()
 }
 
-
+//write the html code to generate a board
 function createBoard() {
     for(let i = 0; i<9; i++) {
         let text = ""
@@ -2493,6 +2498,7 @@ function createBoard() {
   }
 }
 
+//Set the board with initially filled values
 function setBoard() {
     let boardArr = boardstr.split('')
     mistakesDisplay.innerText = '0'
@@ -2517,6 +2523,7 @@ function setBoard() {
 
 }
 
+//Set the solution array
 function setSol() {
     sol = []
     let solArr = solstr.split('')
@@ -2531,6 +2538,7 @@ function setSol() {
     }
 }
 
+//Function to fill the board (used after 3 mistakes)
 function fillBoard() {
     let elements = document.querySelectorAll('.element')
     let i = 0
@@ -2543,53 +2551,86 @@ function fillBoard() {
     })
 }
 
-var selectedElement
-var previousElement
-let a = 0
+//Function to update the value in an element
+function updateValue(element, value) {
+    if(!element.classList.contains('set-board')) {
+        element.value = value
+        if(parseInt(sol[element.id.charAt(3)][element.id.charAt(5)]) == parseInt(value)) {
+            element.style.color = "#1446b3"
+            element.dataset.num = value
+        } else {
+            element.classList.add('wrong')
+            element.style.color = "#e60f0fa1"
+        }
+    }
+    for(let number = 1; number <=9; number++) {
+        let str = '[data-num="' + number + '"]'
+        if(document.querySelectorAll(str).length == 9) {
+            buttons.forEach(btn => {
+                if(btn.classList.contains(number.toString())) {
+                    btn.classList.add('finished')
+                }
+            })
+        }
+    }
+    //Highlight new corresponding elements
+    highlight(element)
+
+
+    //Check for mistakes
+    mistakes = document.querySelectorAll('.wrong').length 
+    
+    mistakesDisplay.innerText = mistakes
+    if(mistakes >= 3) {
+        fillBoard()
+        alert("You have made too many mistakes!!")
+    }
+}
+
+//Function to highlight all cells related to certain element
+function highlight(element) {
+    elements.forEach(square => {
+        square.classList.remove('selected')
+        if(sameRowColSquareNum(element, square)) {
+            square.classList.add('selected')
+        }
+    })
+}
+
+
+//Function to check whether two elements are in same row, col, square or have same number
+function sameRowColSquareNum(element, square) {
+    //check rows
+    if(square.id.charAt(3) == element.id.charAt(3)) {
+        return true
+    }
+    //check cols
+    if(square.id.charAt(5) == element.id.charAt(5)) {
+        return true
+    }
+    //check same 3x3square
+    if(square.dataset.square == element.dataset.square) {
+        return true
+    }
+    //check same number
+    if((square.dataset.num == element.dataset.num) && element.dataset.num != '') {
+        return true
+    }
+
+    //if none returned true then its false
+    return false
+}
 
 elements.forEach(element => {
-    
+    //Click listener for every element
     element.addEventListener('click', () => {
-        previousElement = selectedElement
-        selectedElement = document.activeElement
+        let selectedElement = document.activeElement
 
-        elements.forEach(square => {
-            if(a!=0 && (((square.id.charAt(3)==previousElement.id.charAt(3) || square.id.charAt(5)==previousElement.id.charAt(5)) && square.id.charAt(3)!=selectedElement.id.charAt(3) && square.id.charAt(5)!=selectedElement.id.charAt(5)) || (square.dataset.num == previousElement.dataset.num && square.dataset.num!=selectedElement.dataset.num) || (square.dataset.square == previousElement.dataset.square))) {
-                square.classList.remove('selected')
-            }
-            if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || (square.dataset.num == selectedElement.dataset.num && square.value!='')) {
-                square.classList.add('selected')
-            }
-        })
-        a++
+        highlight(element)
         
         buttons.forEach(button => {
             button.addEventListener('click', () => {
-                elements.forEach(square => {
-                    if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
-                        square.classList.remove('selected')
-                    }
-                })
-                if(!selectedElement.classList.contains('set-board')) {
-                    selectedElement.value = button.innerText
-                    if(parseInt(sol[selectedElement.id.charAt(3)][selectedElement.id.charAt(5)]) == parseInt(button.innerText)) {
-                        selectedElement.style.color = "#1446b3"
-                        selectedElement.dataset.num = button.innerText
-                    } else {
-                        selectedElement.classList.add('wrong')
-                        selectedElement.style.color = "#e60f0fa1"
-                    }
-                }
-                for(let number = 1; number <=9; number++) {
-                    let str = '[data-num="' + number + '"]'
-                    if(document.querySelectorAll(str).length == 9) {
-                        buttons.forEach(btn => {
-                            if(btn.classList.contains(number.toString())) {
-                                btn.classList.add('finished')
-                            }
-                        })
-                    }
-                }
+                updateValue(selectedElement, button.innerText)
             })
         })
 
@@ -2600,52 +2641,27 @@ elements.forEach(element => {
         })
 
         document.addEventListener('keydown', function(event) {
-            elements.forEach(square => {
-                if(square.dataset.square == selectedElement.dataset.square || square.id.charAt(3)==selectedElement.id.charAt(3) || square.id.charAt(5)==selectedElement.id.charAt(5) || element.classList.contains('set-board')) {
-                    square.classList.remove('selected')
-                }
-            })
-            if(!selectedElement.classList.contains('set-board')) {
-                selectedElement.value = event.key
-                if(parseInt(sol[selectedElement.id.charAt(3)][selectedElement.id.charAt(5)]) == parseInt(event.key)) {
-                    selectedElement.style.color = "#1446b3"
-                    selectedElement.dataset.num = event.key
-                } else {
-                    selectedElement.classList.add('wrong')
-                    selectedElement.style.color = "#e60f0fa1"
-                }
+            var nums = ['1','2','3','4','5','6','7','8','9']
+            if(nums.includes(event.key)) {
+                updateValue(selectedElement, event.key)
             }
-            for(let number = 1; number <=9; number++) {
-                let str = '[data-num="' + number + '"]'
-                if(document.querySelectorAll(str).length == 9) {
-                    buttons.forEach(btn => {
-                        if(btn.classList.contains(number.toString())) {
-                            btn.classList.add('finished')
-                        }
-                    })
-                }
-            }            
         })
     })
 })
 
+//When refresh is clicked, start a new game
 refresh.addEventListener('click', () => {
-    init()
+    console.log(paused)
+    newGame()
 })
 
 // level.addEventListener('change', () => {
-//     init()
+//     newGame()
 // })
 
-function stopWatch() {
-    mistakes = document.querySelectorAll('.wrong').length 
-    
-    mistakesDisplay.innerText = mistakes
-    if(mistakes >= 3) {
-        fillBoard()
-        alert("You have made too many mistakes!!")
-    }
 
+//Function to change value in stopwatch
+function stopWatch() {
     seconds++
     if(seconds/60==1) {
         seconds = 0
@@ -2663,7 +2679,6 @@ function stopWatch() {
 }
 
 function checkComplete() {
-
     buttons.forEach(button => {
         if(button.classList.contains('finished')) {
             button.style.color = 'transparent'
@@ -2682,7 +2697,7 @@ function checkComplete() {
         let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + secondsstr
         let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
         alert("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
-        init()
+        newGame()
     }
 }
 
@@ -2690,13 +2705,14 @@ window.setInterval(checkComplete, 1000)
 
 pausebtn.addEventListener('click', () => {
     paused = !paused
+    console.log(paused)
     if(paused) {
+        boardCont.style.display = 'none'
         pausebtn.innerText = 'Play'
     } else {
+        boardCont.style.display = 'block'
         pausebtn.innerText = 'Pause'
     }
-    board.classList.toggle('blur')
-    document.querySelector('.input-cont').classList.toggle('blur')
 
     if(!paused) {
         timer = window.setInterval(stopWatch, 1000)
