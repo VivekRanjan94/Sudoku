@@ -12,9 +12,7 @@
 
 
 .header{
-  display:flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 #sudoku {
@@ -23,7 +21,7 @@
 }
 
 .container {
-  width: 90%;
+  width: 535px;
   margin: auto;
   display:flex;
   flex-direction: column;
@@ -51,13 +49,11 @@
   background-color: #386fe6a6;
 }
 
-@media only screen and (max-width: 440px) {
-  .element {
-    width: 25px;
-    height: 25px;
+@media only screen and (max-width: 700px) {
+  .container {
+    width:1fr;
   }
 }
-
 .element:hover {
   background-color: var(--accent-color);
   cursor:pointer;
@@ -143,6 +139,7 @@ input[type=number] {
 }
 
 .input-cont {
+  width:100%;
   display:flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +148,6 @@ input[type=number] {
 
 .btn {
   border: none;
-  /* border: 1px solid var(--border-color); */
   background-color: var(--secondary-color);
   border-radius: 2px;
   padding: 5px;
@@ -159,7 +155,6 @@ input[type=number] {
 }
 
 [data-delete] {
-  /* background-color: rgba(0,0,0,0.1); */
   color:rgba(255, 0, 0, 0.7);
 }
 
@@ -198,9 +193,12 @@ input[type=number] {
 }
 
 .detail-cont {
-  display:flex;
-  justify-content: center;
-  align-items: center;
+  width:100%;
+}
+
+.timer {
+  float:right;
+  clear:both;
 }
 
 .detail-cont > div {
@@ -209,4 +207,8 @@ input[type=number] {
 
 .blur {
   display:none;
+}
+
+[data-number] {
+  margin:0 15px;
 }

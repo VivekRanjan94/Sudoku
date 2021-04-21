@@ -2414,6 +2414,7 @@ function init() {
     hours = 0
     buttons.forEach(button => {
         button.classList.remove('finished')
+        button.style.color = 'black'
     })
     // let selectedLevel = level.value
     mistakes = 0
@@ -2659,13 +2660,14 @@ function stopWatch() {
     let secondsstr = (seconds<10) ? "0" + seconds:seconds
     let minutesstr = (minutes<10) ? "0" + minutes:minutes
     let hoursstr = (hours<10) ? "0" + hours:hours
-    document.querySelector(".timer").innerText = "Time - " + hoursstr + ":" + minutesstr + ":" + secondsstr
+    let timestr = (hours == 0) ? minutesstr + ":" + secondsstr:hoursstr + ":" + minutesstr + ":" + secondsstr
+    document.querySelector(".timer").innerText = "Time - " + timestr
 }
 
 function checkComplete() {
     buttons.forEach(button => {
         if(button.classList.contains('finished')) {
-            button.innerText = ''
+            button.style.color = 'transparent'
         }
     })
     let filled = 0
@@ -2677,7 +2679,8 @@ function checkComplete() {
     console.log(filled)
 
     if(filled == 81) {
-        let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + seconds
+        let secondsstr = (seconds <10)?'0' + seconds:seconds
+        let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + secondsstr
         let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
         alert("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
         init()
@@ -2693,7 +2696,7 @@ pausebtn.addEventListener('click', () => {
     })
 
     if(!paused) {
-        let timer = window.setInterval(stopWatch, 1000)
+        timer = window.setInterval(stopWatch, 1000)
     } else {
         window.clearInterval(timer)
     }
