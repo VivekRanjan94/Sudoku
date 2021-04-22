@@ -6,16 +6,25 @@
 
 * {
   font-family: Source Sans Pro, sans-serif;
-  font-size: 1.2rem;
+  font-size: 24px;
 }
 
 .header{
   text-align: center;
-}
-
-#sudoku {
   font-size: 100px;
   margin:0;
+}
+
+.prompt {
+  font-size: 1.2rem;
+}
+
+.win {
+  color: rgba(137, 43, 226, 0.733);
+}
+
+.loss {
+  color: rgba(255, 0, 0, 0.644);
 }
 
 .container {
@@ -202,4 +211,12 @@ input[type=number] {
   .container {
     width:1fr;
   }
+}
+
+.hidden {
+  display:none;
+}
+
+.only-play {
+  font-size: 2rem;
 }

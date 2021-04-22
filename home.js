@@ -2400,6 +2400,7 @@ const refresh = document.querySelector('.refresh')
 const level = document.querySelector('#level')
 const mistakesDisplay = document.querySelector('.mistakes')
 const pausebtn = document.querySelector('.pause')
+const endMessage = document.querySelector('.prompt')
 
 let boardIndex = 0
 var boardstr = ''
@@ -2410,6 +2411,9 @@ var mistakes = 0
 newGame()
 
 function newGame() {
+    endMessage.innerText = ''
+    endMessage.classList.remove('win')
+    endMessage.classList.remove('loss')
     paused = true
     pausebtn.innerText = 'Play'
     window.clearInterval(timer)
@@ -2583,7 +2587,8 @@ function updateValue(element, value) {
     mistakesDisplay.innerText = mistakes
     if(mistakes >= 3) {
         fillBoard()
-        console.log("You have made too many mistakes!!")
+        endMessage.classList.add('loss')
+        endMessage.innerText = `You have made too many mistakes!!`
     }
 
     checkComplete()
@@ -2655,6 +2660,8 @@ elements.forEach(element => {
 
 //When refresh is clicked, start a new game
 refresh.addEventListener('click', () => {
+    refresh.classList.add('hidden')
+    pausebtn.classList.add('only-play')
     newGame()
 })
 
@@ -2694,10 +2701,11 @@ function checkComplete() {
         }
     })
     if(filled == 81) {
-        let secondsstr = (seconds <10)?'0' + seconds:seconds
+        let secondsstr = (seconds < 10) ? '0' + seconds:seconds
         let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + secondsstr
         let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
-        console.log("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
+        endMessage.classList.add('win')
+        endMessage.innerText = `Congratulations! You have completed the puzzle in ${time} with ${mistakes} ${mistakesstr}`
         newGame()
     }
 }
@@ -2705,6 +2713,8 @@ function checkComplete() {
 // window.setInterval(checkComplete, 1000)
 
 pausebtn.addEventListener('click', () => {
+    refresh.classList.remove('hidden')
+    pausebtn.classList.remove('only-play')
     paused = !paused
     if(paused) {
         boardCont.style.display = 'none'
