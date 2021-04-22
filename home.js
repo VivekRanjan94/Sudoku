@@ -2583,8 +2583,10 @@ function updateValue(element, value) {
     mistakesDisplay.innerText = mistakes
     if(mistakes >= 3) {
         fillBoard()
-        alert("You have made too many mistakes!!")
+        console.log("You have made too many mistakes!!")
     }
+
+    checkComplete()
 }
 
 //Function to highlight all cells related to certain element
@@ -2621,10 +2623,12 @@ function sameRowColSquareNum(element, square) {
     return false
 }
 
+var selectedElement
+
 elements.forEach(element => {
     //Click listener for every element
     element.addEventListener('click', () => {
-        let selectedElement = document.activeElement
+        selectedElement = document.activeElement
 
         highlight(element)
         
@@ -2651,7 +2655,6 @@ elements.forEach(element => {
 
 //When refresh is clicked, start a new game
 refresh.addEventListener('click', () => {
-    console.log(paused)
     newGame()
 })
 
@@ -2690,22 +2693,19 @@ function checkComplete() {
             filled++
         }
     })
-    console.log(filled)
-
     if(filled == 81) {
         let secondsstr = (seconds <10)?'0' + seconds:seconds
         let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + secondsstr
         let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
-        alert("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
+        console.log("Congratulations! You have completed the puzzle in " + time + " with " + mistakes + " " + mistakesstr)
         newGame()
     }
 }
 
-window.setInterval(checkComplete, 1000)
+// window.setInterval(checkComplete, 1000)
 
 pausebtn.addEventListener('click', () => {
     paused = !paused
-    console.log(paused)
     if(paused) {
         boardCont.style.display = 'none'
         pausebtn.innerText = 'Play'
