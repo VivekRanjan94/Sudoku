@@ -2694,23 +2694,17 @@ function checkComplete() {
             button.style.color = 'transparent'
         }
     })
-    let filled = 0
-    elements.forEach(element => {
-        if(element.dataset.num!="") {
-            filled++
-        }
-    })
-    if(filled == 81) {
+    let empty = document.querySelectorAll('[data-num=""]').length
+
+    if(empty == 50) {
+        clearInterval(timer)
         let secondsstr = (seconds < 10) ? '0' + seconds:seconds
-        let time = (hours == 0)?(minutes == 0)?seconds:minutes + ":" + seconds:hours + ":" + minutes + ":" + secondsstr
+        let time = (hours == 0)?(minutes == 0)?`${seconds} seconds`:`${minutes}:${secondsstr}`:hours + ":" + minutes + ":" + secondsstr
         let mistakesstr = (mistakes == 1) ? "mistake":"mistakes"
         endMessage.classList.add('win')
         endMessage.innerText = `Congratulations! You have completed the puzzle in ${time} with ${mistakes} ${mistakesstr}`
-        newGame()
     }
 }
-
-// window.setInterval(checkComplete, 1000)
 
 pausebtn.addEventListener('click', () => {
     refresh.classList.remove('hidden')
