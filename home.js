@@ -2696,7 +2696,7 @@ function checkComplete() {
     })
     let empty = document.querySelectorAll('[data-num=""]').length
 
-    if(empty == 50) {
+    if(empty == 0) {
         clearInterval(timer)
         let secondsstr = (seconds < 10) ? '0' + seconds:seconds
         let time = (hours == 0)?(minutes == 0)?`${seconds} seconds`:`${minutes}:${secondsstr}`:hours + ":" + minutes + ":" + secondsstr
