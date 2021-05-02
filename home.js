@@ -9766,10 +9766,7 @@ function sameRowColSquareNum(element, square) {
         return true
     }
     //check same number
-    if (
-        square.dataset.num == element.dataset.num &&
-        element.dataset.num != ''
-    ) {
+    if (square.dataset.num == element.dataset.num && element.dataset.num != '') {
         return true
     }
 
@@ -9777,32 +9774,32 @@ function sameRowColSquareNum(element, square) {
     return false
 }
 
-var selectedElement;
+var selectedElement
 
 elements.forEach((element) => {
     element.addEventListener('click', () => {
-        selectedElement = document.activeElement;
-    });
-});
+        selectedElement = document.activeElement
+    })
+})
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         // console.log('hmm: ' + button.innerText)
         // selectedElement = document.activeElement
         if (selectedElement !== undefined)
-            updateValue(selectedElement, button.innerText);
-    });
-});
+            updateValue(selectedElement, button.innerText)
+    })
+})
 
 deleteButton.addEventListener('click', () => {
     if (!selectedElement.classList.contains('set-board')) {
-        selectedElement.value = '';
+        selectedElement.value = ''
     }
 })
 document.addEventListener('keydown', function (event) {
     var nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     if (nums.includes(event.key)) {
-        updateValue(selectedElement, event.key);
+        updateValue(selectedElement, event.key)
     }
 })
 
