@@ -10,8 +10,14 @@
   <script src="home.js" defer></script>
 </head>
 
-<body>
-  
+<body id="body">
+  <div class='move_switch'>
+    <span id='mode'>Dark: </span>
+    <label class="switch"> 
+      <input type="checkbox" onclick="dark()">
+      <span class="slider round"></span>
+    </label>
+  </div>
   <div class="container">
     <div class="header">
         Sudoku
@@ -44,8 +50,8 @@
       <option value="4">Expert</option>
       <option value="5">Random</option>
     </select> -->
-      <button class="btn refresh hidden">Refresh</button>
-      <button class="btn pause only-play">Play</button>
+      <button class="btn refresh hidden fcolor">Refresh</button>
+      <button class="btn pause only-play fcolor">Play</button>
     </div>
   </div>
 </body>
