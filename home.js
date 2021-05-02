@@ -9550,7 +9550,7 @@ function newGame() {
   hours = 0
   buttons.forEach((button) => {
     button.classList.remove('finished')
-    button.style.color = 'black'
+    button.classList.add('fcolor')
   })
   // let selectedLevel = level.value
   mistakes = 0
@@ -9650,7 +9650,7 @@ function setBoard() {
     element.dataset.num = ''
     element.classList.remove('wrong')
     element.classList.remove('selected')
-    element.style.color = 'black'
+    element.classList.add('fcolor')
     if (boardArr[i] != '.') {
       element.value = boardArr[i]
       element.classList.add('set-board')
@@ -9685,25 +9685,34 @@ function fillBoard() {
   elements.forEach((element) => {
     element.value = sol[element.id.charAt(3)][element.id.charAt(5)]
     if (!element.classList.contains('set-board')) {
-      element.style.color = '#1c7401bd'
+      element.classList.remove('Wrong')
+      element.classList.remove('Right')
+      element.classList.remove('fcolor')
+      element.classList.add('crt')
     }
     i++
   })
 }
 
-//Function to update the value in an element
+//Function to update the value in an element[data-coor]
 function updateValue(element, value) {
   if (!element.classList.contains('set-board')) {
     element.value = value
     if (
-      parseInt(sol[element.id.charAt(3)][element.id.charAt(5)]) ==
+      parseInt(sol[element.id.charAt(3)][element.id.charAt(5)]) ===
       parseInt(value)
     ) {
-      element.style.color = '#1446b3'
+      element.classList.remove('Wrong')
+      element.classList.remove('fcolor')
+      element.classList.add('Right')
       element.dataset.num = value
     } else {
-      element.classList.add('wrong')
-      element.style.color = '#e60f0fa1'
+      element.classList.remove('fcolor')
+      // element.classList.add('wrong')
+      // console.log('id: ' + element.id);
+      mistakes++
+      // console.log(mistakes);
+      element.classList.add('Wrong')
     }
   }
   for (let number = 1; number <= 9; number++) {
@@ -9720,7 +9729,7 @@ function updateValue(element, value) {
   highlight(element)
 
   //Check for mistakes
-  mistakes = document.querySelectorAll('.wrong').length
+  // mistakes = document.querySelectorAll('.wrong').length
 
   mistakesDisplay.innerText = mistakes
   if (mistakes >= 3) {
@@ -9768,36 +9777,63 @@ function sameRowColSquareNum(element, square) {
 var selectedElement
 
 elements.forEach((element) => {
-  //Click listener for every element
   element.addEventListener('click', () => {
     selectedElement = document.activeElement
-
-    highlight(element)
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        updateValue(selectedElement, button.innerText)
-      })
-    })
-
-    deleteButton.addEventListener('click', () => {
-      if (!selectedElement.classList.contains('set-board')) {
-        selectedElement.value = ''
-      }
-    })
-
-    document.addEventListener('keydown', function (event) {
-      var nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-      if (nums.includes(event.key)) {
-        updateValue(selectedElement, event.key)
-      } else if (event.key === 'Backspace') {
-        if (!selectedElement.classList.contains('set-board')) {
-          selectedElement.value = ''
-        }
-      }
-    })
   })
 })
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    // console.log('hmm: ' + button.innerText)
+    // selectedElement = document.activeElement
+    if (selectedElement !== undefined)
+      updateValue(selectedElement, button.innerText)
+  })
+})
+
+deleteButton.addEventListener('click', () => {
+  if (!selectedElement.classList.contains('set-board')) {
+    selectedElement.value = ''
+  }
+})
+document.addEventListener('keydown', function (event) {
+  var nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  if (nums.includes(event.key)) {
+    updateValue(selectedElement, event.key)
+  }
+})
+
+// elements.forEach(element => {
+//     //Click listener for every element
+//     element.addEventListener('click', () => {
+//         // console.log(document.activeElement);
+//         selectedElement = document.activeElement
+//         // console.log('id : ' + selectedElement.id)
+//         if(selectedElement.id != element.id)
+//             return;
+//         highlight(element)
+
+//         buttons.forEach(button => {
+//             button.addEventListener('click', () => {
+//                 // console.log('hmm: ' + button.innerText)
+//                 updateValue(element, button.innerText)
+//             })
+//         })
+//         console.log('hi')
+//         deleteButton.addEventListener('click', () => {
+//             if(!element.classList.contains('set-board')) {
+//                 element.value = ''
+//             }
+//         })
+
+//         document.addEventListener('keydown', function(event) {
+//             var nums = ['1','2','3','4','5','6','7','8','9']
+//             if(nums.includes(event.key)) {
+//                 updateValue(element, event.key)
+//             }
+//         })
+//     })
+// })
 
 //When refresh is clicked, start a new game
 refresh.addEventListener('click', () => {
@@ -9847,7 +9883,7 @@ function checkComplete() {
         ? minutes == 0
           ? `${seconds} seconds`
           : `${minutes}:${secondsstr}`
-        : `${hours}:${minutes}:${secondsstr}`
+        : hours + ':' + minutes + ':' + secondsstr
     let mistakesstr = mistakes == 1 ? 'mistake' : 'mistakes'
     endMessage.classList.add('win')
     endMessage.innerText = `Congratulations! You have completed the puzzle in ${time} with ${mistakes} ${mistakesstr}`
@@ -9872,3 +9908,11 @@ pausebtn.addEventListener('click', () => {
     window.clearInterval(timer)
   }
 })
+
+function dark() {
+  let body = document.getElementById('body')
+  body.classList.toggle('dark')
+  if (body.classList.contains('dark'))
+    document.getElementById('mode').innerHTML = 'Light:'
+  else document.getElementById('mode').innerHTML = 'Dark:'
+}
