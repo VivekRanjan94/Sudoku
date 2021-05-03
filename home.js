@@ -9779,6 +9779,7 @@ var selectedElement
 elements.forEach((element) => {
   element.addEventListener('click', () => {
     selectedElement = document.activeElement
+    highlight(selectedElement)
   })
 })
 
@@ -9802,38 +9803,6 @@ document.addEventListener('keydown', function (event) {
     updateValue(selectedElement, event.key)
   }
 })
-
-// elements.forEach(element => {
-//     //Click listener for every element
-//     element.addEventListener('click', () => {
-//         // console.log(document.activeElement);
-//         selectedElement = document.activeElement
-//         // console.log('id : ' + selectedElement.id)
-//         if(selectedElement.id != element.id)
-//             return;
-//         highlight(element)
-
-//         buttons.forEach(button => {
-//             button.addEventListener('click', () => {
-//                 // console.log('hmm: ' + button.innerText)
-//                 updateValue(element, button.innerText)
-//             })
-//         })
-//         console.log('hi')
-//         deleteButton.addEventListener('click', () => {
-//             if(!element.classList.contains('set-board')) {
-//                 element.value = ''
-//             }
-//         })
-
-//         document.addEventListener('keydown', function(event) {
-//             var nums = ['1','2','3','4','5','6','7','8','9']
-//             if(nums.includes(event.key)) {
-//                 updateValue(element, event.key)
-//             }
-//         })
-//     })
-// })
 
 //When refresh is clicked, start a new game
 refresh.addEventListener('click', () => {
