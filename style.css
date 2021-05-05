@@ -1,23 +1,25 @@
-:root{
+:root {
   --secondary-color: white;
-  --accent-color: rgba(0,0,0,0.2);
+  --accent-color: rgba(0, 0, 0, 0.2);
   --loss-color: rgba(255, 0, 0, 0.9);
   --border-color: black;
   --crt-color: rgb(28, 116, 1);
-  --selected-color: rgba(0,0,0,0.1);
+  --selected-color: rgba(0, 0, 0, 0.1);
   --wrong-color: rgba(255, 0, 0, 0.9);
 }
 
 .dark {
-   --secondary-color: #212529;
-   --accent-color: rgba(0,0,0);
-   --border-color: #f0efe6;
-   --crt-color: #00fc9c;
-   --loss-color: #f90000;
-   --wrong-color: #e25252;
-   --selected-color: rgba(100, 100, 100);
-   background-color: #212529;
-   color: #f0efe6;
+  --secondary-color: #393d40;
+  --accent-color: rgba(0, 0, 0);
+  --border-color: white;
+  --crt-color: #00fc9c;
+  --loss-color: #f90000;
+  --wrong-color: #e25252;
+  /* --selected-color: rgba(100, 100, 100); */
+  --selected-color: rgba(100, 100, 100, 0.4);
+  /* background-color: #212529; */
+  background-color: #393d40;
+  color: white;
 }
 
 * {
@@ -25,10 +27,10 @@
   font-size: 24px;
 }
 
-.header{
+.header {
   text-align: center;
   font-size: 100px;
-  margin:0;
+  margin: 0;
   color: var(--border-color);
 }
 
@@ -58,13 +60,13 @@
 }
 
 .Right {
-  color: #1446b3
+  color: #1446b3;
 }
 
 .container {
   width: 535px;
   margin: auto;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -73,16 +75,15 @@
 .board {
   font-family: Robinson Typeface sans-serif;
   list-style-type: none;
-  margin:auto;
+  margin: auto;
 }
-
 
 .element {
   background-color: var(--secondary-color);
   width: 55px;
   height: 55px;
   padding: 0;
-  margin:0;
+  margin: 0;
   text-align: center;
 }
 
@@ -92,16 +93,16 @@
 
 .element:hover {
   background-color: var(--accent-color);
-  cursor:pointer;
+  cursor: pointer;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -175,8 +176,8 @@ input[type=number] {
 }
 
 .input-cont {
-  width:100%;
-  display:flex;
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1em;
@@ -187,27 +188,27 @@ input[type=number] {
   background-color: var(--secondary-color);
   border-radius: 2px;
   padding: 5px;
-  margin:2px;
+  margin: 2px;
 }
 
 [data-delete] {
-  color:rgba(255, 0, 0, 0.7);
+  color: rgba(255, 0, 0, 0.7);
 }
 
-.btn:hover{
-  background-color:var(--accent-color);
+.btn:hover {
+  background-color: var(--accent-color);
   cursor: pointer;
 }
 
 #level {
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  padding:2px;
-  margin:4px;
+  padding: 2px;
+  margin: 4px;
 }
 
 #level:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .refresh {
@@ -224,40 +225,38 @@ input[type=number] {
 }
 
 .detail-cont {
-  width:100%;
+  width: 100%;
 }
 
 .timer {
-  float:right;
-  clear:both;
+  float: right;
+  clear: both;
 }
 
 .detail-cont > div {
-  margin:10px
+  margin: 10px;
 }
 
 [data-number] {
-  margin:0 10px;
-  padding:10px
+  margin: 0 10px;
+  padding: 10px;
 }
 
 @media only screen and (max-width: 700px) {
   .container {
-    width:1fr;
+    width: 1fr;
   }
 }
 
 .hidden {
-  display:none;
+  display: none;
 }
 
 .only-play {
   font-size: 2rem;
 }
 
-
 .move_switch {
-  width: 100%;
   text-align: right;
   justify-content: right;
 }
@@ -291,20 +290,20 @@ input[type=number] {
   right: 0;
   bottom: 0px;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
