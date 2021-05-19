@@ -37,7 +37,7 @@ function newGame() {
   hours = 0
   buttons.forEach((button) => {
     button.classList.remove('finished')
-    button.classList.add('fcolor')
+    button.style.color = 'black'
   })
   // let selectedLevel = level.value
   mistakes = 0
@@ -137,7 +137,7 @@ function setBoard() {
     element.dataset.num = ''
     element.classList.remove('wrong')
     element.classList.remove('selected')
-    element.classList.add('fcolor')
+    element.style.color = 'black'
     if (boardArr[i] != '.') {
       element.value = boardArr[i]
       element.classList.add('set-board')
@@ -172,34 +172,25 @@ function fillBoard() {
   elements.forEach((element) => {
     element.value = sol[element.id.charAt(3)][element.id.charAt(5)]
     if (!element.classList.contains('set-board')) {
-      element.classList.remove('Wrong')
-      element.classList.remove('Right')
-      element.classList.remove('fcolor')
-      element.classList.add('crt')
+      element.style.color = '#1c7401bd'
     }
     i++
   })
 }
 
-//Function to update the value in an element[data-coor]
+//Function to update the value in an element
 function updateValue(element, value) {
   if (!element.classList.contains('set-board')) {
     element.value = value
     if (
-      parseInt(sol[element.id.charAt(3)][element.id.charAt(5)]) ===
+      parseInt(sol[element.id.charAt(3)][element.id.charAt(5)]) ==
       parseInt(value)
     ) {
-      element.classList.remove('Wrong')
-      element.classList.remove('fcolor')
-      element.classList.add('Right')
+      element.style.color = '#1446b3'
       element.dataset.num = value
     } else {
-      element.classList.remove('fcolor')
-      // element.classList.add('wrong')
-      // console.log('id: ' + element.id);
-      mistakes++
-      // console.log(mistakes);
-      element.classList.add('Wrong')
+      element.classList.add('wrong')
+      element.style.color = '#e60f0fa1'
     }
   }
   for (let number = 1; number <= 9; number++) {
@@ -216,7 +207,7 @@ function updateValue(element, value) {
   highlight(element)
 
   //Check for mistakes
-  // mistakes = document.querySelectorAll('.wrong').length
+  mistakes = document.querySelectorAll('.wrong').length
 
   mistakesDisplay.innerText = mistakes
   if (mistakes >= 3) {
@@ -264,31 +255,35 @@ function sameRowColSquareNum(element, square) {
 var selectedElement
 
 elements.forEach((element) => {
+  //Click listener for every element
   element.addEventListener('click', () => {
     selectedElement = document.activeElement
-    highlight(selectedElement)
-  })
-})
 
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    // console.log('hmm: ' + button.innerText)
-    // selectedElement = document.activeElement
-    if (selectedElement !== undefined)
-      updateValue(selectedElement, button.innerText)
-  })
-})
+    highlight(element)
 
-deleteButton.addEventListener('click', () => {
-  if (!selectedElement.classList.contains('set-board')) {
-    selectedElement.value = ''
-  }
-})
-document.addEventListener('keydown', function (event) {
-  var nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-  if (nums.includes(event.key)) {
-    updateValue(selectedElement, event.key)
-  }
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        updateValue(selectedElement, button.innerText)
+      })
+    })
+
+    deleteButton.addEventListener('click', () => {
+      if (!selectedElement.classList.contains('set-board')) {
+        selectedElement.value = ''
+      }
+    })
+
+    document.addEventListener('keydown', function (event) {
+      var nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+      if (nums.includes(event.key)) {
+        updateValue(selectedElement, event.key)
+      } else if (event.key === 'Backspace') {
+        if (!selectedElement.classList.contains('set-board')) {
+          selectedElement.value = ''
+        }
+      }
+    })
+  })
 })
 
 //When refresh is clicked, start a new game
@@ -339,7 +334,7 @@ function checkComplete() {
         ? minutes == 0
           ? `${seconds} seconds`
           : `${minutes}:${secondsstr}`
-        : hours + ':' + minutes + ':' + secondsstr
+        : `${hours}:${minutes}:${secondsstr}`
     let mistakesstr = mistakes == 1 ? 'mistake' : 'mistakes'
     endMessage.classList.add('win')
     endMessage.innerText = `Congratulations! You have completed the puzzle in ${time} with ${mistakes} ${mistakesstr}`
@@ -364,11 +359,3 @@ pausebtn.addEventListener('click', () => {
     window.clearInterval(timer)
   }
 })
-
-function dark() {
-  let body = document.getElementById('body')
-  body.classList.toggle('dark')
-  if (body.classList.contains('dark'))
-    document.getElementById('mode').innerHTML = 'Light:'
-  else document.getElementById('mode').innerHTML = 'Dark:'
-}
