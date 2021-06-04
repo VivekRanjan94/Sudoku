@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-home.js
-boards.js
-style.css
-index.html
+.home.js
+.boards.js
+.style.css
+.index.html
