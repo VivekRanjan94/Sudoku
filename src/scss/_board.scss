@@ -1,0 +1,94 @@
+.board {
+  margin: 0 auto;
+  width: 90vw;
+  height: 90vw;
+  max-width: 360px;
+  max-height: 360px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+
+  & .element {
+    font-family: Robinson Typeface sans-serif;
+    font-size: unquote('min(8vw, 30px)');
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.selected {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    &.highlighted {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    &.wrong {
+      color: red;
+    }
+    &:not(.set) {
+      color: blue;
+    }
+
+    &.top-left {
+      border-top: 1px solid $borderColor;
+      border-left: 1px solid $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+    &.top-mid {
+      border-top: 1px solid $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+    &.top-right {
+      border-top: 1px solid $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px solid $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+    &.mid-left {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px solid $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+    &.mid-mid {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+    &.mid-right {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px solid $borderColor;
+      border-bottom: 1px dotted $borderColor;
+    }
+
+    &.bot-left {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px solid $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px solid $borderColor;
+    }
+    &.bot-mid {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px dotted $borderColor;
+      border-bottom: 1px solid $borderColor;
+    }
+    &.bot-right {
+      border-top: 1px dotted $borderColor;
+      border-left: 1px dotted $borderColor;
+      border-right: 1px solid $borderColor;
+      border-bottom: 1px solid $borderColor;
+    }
+  }
+}

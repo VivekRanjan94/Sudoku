@@ -1,0 +1,22 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.title {
+  margin: 1rem;
+  font-size: 3rem;
+}
