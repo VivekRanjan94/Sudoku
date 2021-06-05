@@ -23,7 +23,7 @@ export default function Element({
   )
 }
 
-function classText(col, row) {
+export function classText(col, row) {
   let inputClass = ''
   if (row % 3 === 0) {
     inputClass += 'top-'

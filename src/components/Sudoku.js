@@ -7,15 +7,19 @@ import Paused from './Paused'
 import useEventListener from '../hooks/useEventListener'
 import sudokuReducer from './sudokuReducer.js'
 import solveBoard from '../sudoku/solveBoard'
+import Time, { format } from './Time.js'
+import ButtonInput from './ButtonInput.js'
 
 export default function Sudoku() {
   const [sudoku, dispatch] = useReducer(sudokuReducer, {
     board: [],
     mistakes: 0,
+    completed: false,
   })
   const [isLoading, setIsLoading] = useState(true)
   const [difficulty, setDifficulty] = useState('easy')
   const [isPaused, setIsPaused] = useState(true)
+  const [time, setTime] = useState(0)
 
   const difficultySelectRef = useRef()
 
@@ -53,16 +57,21 @@ export default function Sudoku() {
     setIsLoading(false)
   }
 
-  // useEffect(() => {
-  //   console.log(sudoku)
-  // }, [sudoku])
-
   useEffect(() => {
-    if (sudoku.mistakes === 3) {
-      console.log('game over')
+    if (sudoku.completed) {
+      alert(
+        `You completed the board in ${format(time)} with ${
+          sudoku.mistakes
+        } mistakes`
+      )
       getBoard()
     }
-  }, [sudoku.mistakes])
+    if (sudoku.mistakes === 3) {
+      alert('You made too many mistakes')
+      getBoard()
+    }
+    console.log(sudoku)
+  }, [sudoku])
 
   useEventListener('keydown', (e) => {
     if (e.code === 'Space') {
@@ -73,10 +82,10 @@ export default function Sudoku() {
       dispatch({
         type: 'input',
         payload: {
-          value: e.key,
+          value: Number(e.key),
         },
       })
-      dispatch({ type: 'deselect' })
+      dispatch({ type: 'select', payload: { target: sudoku.selectedElement } })
     }
 
     if (e.code === 'Backspace') {
@@ -100,8 +109,8 @@ export default function Sudoku() {
   } else {
     if (isPaused) {
       return (
-        <>
-          <Paused />
+        <div className='paused'>
+          <Paused sudoku={sudoku} time={time} />
           <button
             onClick={() => {
               setIsPaused(false)
@@ -109,27 +118,35 @@ export default function Sudoku() {
           >
             Play
           </button>
-        </>
+        </div>
       )
     }
 
     return (
       <>
-        <div>Mistakes: {sudoku.mistakes}</div>
-        <Board sudoku={sudoku} dispatch={dispatch} />
-        <select
-          name='difficulty'
-          id='difficulty'
-          onChange={handleDifficultyChange}
-          defaultValue='easy'
-          ref={difficultySelectRef}
-        >
-          <option value='easy'>Easy</option>
-          <option value='medium'>Medium</option>
-          <option value='hard'>Hard</option>
-          <option value='random'>Random</option>
-        </select>
-        <button onClick={() => setIsPaused(true)}>Pause</button>
+        <div className='details'>
+          <div>Mistakes: {sudoku.mistakes}</div>
+          <Time time={time} />
+        </div>
+
+        <Board sudoku={sudoku} dispatch={dispatch} setTime={setTime} />
+        <ButtonInput sudoku={sudoku} dispatch={dispatch} />
+        <div className='controls'>
+          <select
+            name='difficulty'
+            id='difficulty'
+            onChange={handleDifficultyChange}
+            defaultValue={difficulty}
+            ref={difficultySelectRef}
+          >
+            <option value='easy'>Easy</option>
+            <option value='medium'>Medium</option>
+            <option value='hard'>Hard</option>
+            <option value='random'>Random</option>
+          </select>
+          <button onClick={() => setIsPaused(true)}>Pause</button>
+          <button onClick={() => getBoard()}>Refresh</button>
+        </div>
       </>
     )
   }

@@ -4,6 +4,9 @@
   height: 90vw;
   max-width: 360px;
   max-height: 360px;
+
+  box-shadow: 0 0 3px 0 black;
+
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
@@ -11,7 +14,7 @@
   & .element {
     font-family: Robinson Typeface sans-serif;
     font-size: unquote('min(8vw, 30px)');
-    font-weight: 900;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,17 +25,22 @@
       background-color: rgba(0, 0, 0, 0.1);
     }
 
-    &.selected {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
     &.highlighted {
       background-color: rgba(0, 0, 0, 0.2);
     }
-    &.wrong {
-      color: red;
+
+    &.selected {
+      outline: 1px solid black;
+      background-color: #386fe6a6;
     }
-    &:not(.set) {
-      color: blue;
+
+    &:not(.wrong) {
+      &:not(.set) {
+        color: rgb(20, 70, 179);
+      }
+    }
+    &.wrong {
+      color: rgba(230, 15, 15, 0.63);
     }
 
     &.top-left {

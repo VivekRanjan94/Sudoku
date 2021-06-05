@@ -1,7 +1,7 @@
 export default function sudokuReducer(sudoku, action) {
   switch (action.type) {
     case 'set-board': {
-      return { board: action.payload.board, mistakes: 0 }
+      return { board: action.payload.board, mistakes: 0, completed: false }
     }
     case 'select': {
       const { x, y } = action.payload.target.dataset
@@ -19,6 +19,7 @@ export default function sudokuReducer(sudoku, action) {
             }
           })
         }),
+        selectedElement: action.payload.target,
       }
     }
     case 'input': {
@@ -31,16 +32,18 @@ export default function sudokuReducer(sudoku, action) {
           (element) => element.selected
         )
         if (!newBoard[rowIndex][colIndex].setBoard) {
-          newBoard[rowIndex][colIndex].value = Number(action.payload.value)
+          newBoard[rowIndex][colIndex].value = action.payload.value
           let wasWrong =
-            Number(action.payload.value) !==
-            newBoard[rowIndex][colIndex].correct
+            action.payload.value !== newBoard[rowIndex][colIndex].correct
           newBoard[rowIndex][colIndex].wrong = wasWrong
 
           return {
             ...sudoku,
             board: newBoard,
             mistakes: wasWrong ? sudoku.mistakes + 1 : sudoku.mistakes,
+            complete: !newBoard.some((row) =>
+              row.some((element) => element.value === undefined)
+            ),
           }
         }
       }
