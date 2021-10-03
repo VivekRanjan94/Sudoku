@@ -1,0 +1,56 @@
+.modal {
+  &__background {
+    position: fixed;
+    background-color: rgba(6, 49, 114, 0.5);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__cross {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      height: 30px;
+      width: 2px;
+      background-color: #333;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    max-width: 600px;
+    width: 90%;
+    height: 60%;
+
+    background-color: #4864d9;
+    border-radius: 7px;
+  }
+}

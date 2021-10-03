@@ -1,6 +1,4 @@
-import React from 'react'
-
-export function format(time) {
+const format = (time) => {
   // Hours, minutes and seconds
   var hrs = ~~(time / 3600)
   var mins = ~~((time % 3600) / 60)
@@ -16,6 +14,4 @@ export function format(time) {
   return ret
 }
 
-export default function Time({ time }) {
-  return <div>Time: {format(time)}</div>
-}
+export { format }

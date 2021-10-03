@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Element from './Element.js'
+import Element from './Element'
 
 export default function Board({ sudoku, dispatch, setTime }) {
   function increment() {
@@ -11,6 +11,7 @@ export default function Board({ sudoku, dispatch, setTime }) {
     return () => {
       clearInterval(timeInterval)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>

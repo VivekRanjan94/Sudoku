@@ -1,11 +1,11 @@
-import { classText } from './Element'
+import { classText } from '../Utils/sudokuUtils'
 import Time from './Time'
 
 export default function Paused({ sudoku, time }) {
   return (
     <>
       <div className='details'>
-        <div>Mistakes: {sudoku.mistakes}</div>
+        <div>Mistakes: {sudoku.mistakes}/3</div>
         <Time time={time} />
       </div>
       <div className='paused__board'>
@@ -13,6 +13,7 @@ export default function Paused({ sudoku, time }) {
           return row.map((element, columnIndex) => {
             return (
               <div
+                key={rowIndex + columnIndex}
                 className={`element ${classText(columnIndex, rowIndex)} `}
               ></div>
             )

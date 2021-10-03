@@ -1,7 +1,22 @@
 export default function sudokuReducer(sudoku, action) {
   switch (action.type) {
     case 'set-board': {
-      return { board: action.payload.board, mistakes: 0, completed: false }
+      return {
+        board: action.payload.board,
+        mistakes: 0,
+        completed: false,
+        displayedNums: {
+          one: true,
+          two: true,
+          three: true,
+          four: true,
+          five: true,
+          six: true,
+          seven: true,
+          eight: true,
+          nine: true,
+        },
+      }
     }
     case 'select': {
       const { x, y } = action.payload.target.dataset
@@ -37,6 +52,22 @@ export default function sudokuReducer(sudoku, action) {
             action.payload.value !== newBoard[rowIndex][colIndex].correct
           newBoard[rowIndex][colIndex].wrong = wasWrong
 
+          let count = 0
+          newBoard.forEach((row) => {
+            row.forEach((element) => {
+              if (element.value === action.payload.value) {
+                count++
+              }
+            })
+          })
+
+          let newDisplayedNums = sudoku.displayedNums
+          if (count === 9) {
+            newDisplayedNums = {
+              ...sudoku.displayedNums,
+              [numstr(action.payload.value)]: false,
+            }
+          }
           return {
             ...sudoku,
             board: newBoard,
@@ -44,6 +75,7 @@ export default function sudokuReducer(sudoku, action) {
             complete: !newBoard.some((row) =>
               row.some((element) => element.value === undefined)
             ),
+            displayedNums: newDisplayedNums,
           }
         }
       }
@@ -62,9 +94,27 @@ export default function sudokuReducer(sudoku, action) {
         if (!newBoard[rowIndex][colIndex].setBoard) {
           newBoard[rowIndex][colIndex].value = undefined
           newBoard[rowIndex][colIndex].wrong = false
+
+          let count = 0
+          newBoard.forEach((row) => {
+            row.forEach((element) => {
+              if (element.value === action.payload.value) {
+                count++
+              }
+            })
+          })
+
+          let newDisplayedNums = sudoku.displayedNums
+          if (count === 9) {
+            newDisplayedNums = {
+              ...sudoku.displayedNums,
+              [numstr(action.payload.value)]: false,
+            }
+          }
           return {
             ...sudoku,
             board: newBoard,
+            displayedNums: newDisplayedNums,
           }
         }
       }
@@ -107,4 +157,39 @@ function shouldHighlight(target, element) {
 
   //if none returned true then its false
   return false
+}
+
+function numstr(num) {
+  switch (num) {
+    case 1: {
+      return 'one'
+    }
+    case 2: {
+      return 'two'
+    }
+    case 3: {
+      return 'three'
+    }
+    case 4: {
+      return 'four'
+    }
+    case 5: {
+      return 'five'
+    }
+    case 6: {
+      return 'six'
+    }
+    case 7: {
+      return 'seven'
+    }
+    case 8: {
+      return 'eight'
+    }
+    case 9: {
+      return 'nine'
+    }
+    default: {
+      console.log('default numstr case')
+    }
+  }
 }
